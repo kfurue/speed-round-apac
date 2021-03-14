@@ -43,12 +43,15 @@ private val LightColorPalette = lightColors(
     onSurface = gray
 )
 
+private val WelcomeLightColorPalette = LightColorPalette.copy(background = pink900)
+private val WelcomeDarkColorPalette = DarkColorPalette.copy(background = pink900)
+
 @Composable
-fun MyTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable() () -> Unit) {
+fun WelcomeTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable() () -> Unit) {
     val colors = if (darkTheme) {
-        DarkColorPalette
+        WelcomeDarkColorPalette
     } else {
-        LightColorPalette
+        WelcomeLightColorPalette
     }
 
     MaterialTheme(
