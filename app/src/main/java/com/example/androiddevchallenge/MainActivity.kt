@@ -50,6 +50,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.example.androiddevchallenge.ui.NavGraph
 import com.example.androiddevchallenge.ui.theme.WelcomeTheme
 import com.example.androiddevchallenge.ui.theme.appTypography
 import com.example.androiddevchallenge.ui.theme.pink900
@@ -68,11 +69,7 @@ class MainActivity : AppCompatActivity() {
         }
         super.onCreate(savedInstanceState)
         setContent {
-            WelcomeTheme {
-                MyApp(
-                    onClick = { /*TODO*/ }
-                )
-            }
+            NavGraph()
         }
     }
 }
@@ -80,116 +77,118 @@ class MainActivity : AppCompatActivity() {
 // Start building your app here!
 @Composable
 fun MyApp(onClick: () -> Unit) {
-    val bgId = if (isSystemInDarkTheme()) {
-        R.drawable.dark_welcome_bg
-    } else {
-        R.drawable.light_welcome_bg
-    }
-
-    Image(
-        painter = painterResource(id = bgId),
-        contentDescription = null,
-        modifier = Modifier
-            .background(colors.primary)
-            .fillMaxWidth()
-            .fillMaxHeight()
-    )
-    Column {
-        Spacer(Modifier.size(72.dp))
-        Row {
-            Spacer(Modifier.size(88.dp))
-            Box {
-                val logoId = if (isSystemInDarkTheme()) {
-                    R.drawable.dark_welcome_illos
-                } else {
-                    R.drawable.light_welcome_illos
-                }
-                Image(
-                    painter = painterResource(id = logoId),
-                    contentDescription = null,
-                    contentScale = FillHeight,
-                    alignment = Alignment.CenterStart,
-                    modifier = Modifier
-                        .height((35 * 8).dp)
-                )
-            }
+    WelcomeTheme {
+        val bgId = if (isSystemInDarkTheme()) {
+            R.drawable.dark_welcome_bg
+        } else {
+            R.drawable.light_welcome_bg
         }
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            val logoId = if (isSystemInDarkTheme()) {
-                R.drawable.dark_logo
-            } else {
-                R.drawable.light_logo
-            }
 
-            Spacer(Modifier.size(48.dp))
-            Image(
-                painter = painterResource(id = logoId),
-                contentDescription = null,
-                modifier = Modifier.padding()
-            )
-            Text(
-                "Beautiful home garden solutions",
-                style = appTypography.subtitle1,
-                fontWeight = FontWeight.Light,
-                color = colors.onPrimary,
-                modifier = Modifier
-                    .firstBaselineToTop(
-                        24.dp,
-                        40.dp
-                    )
-                    .padding()
-            )
-            Row(
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.Top,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Button(
-                    shape = shapes.medium,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(48.dp)
-                        .padding(
-                            vertical = 0.dp,
-                            horizontal = 16.dp
-                        ),
-                    colors = ButtonDefaults.buttonColors(backgroundColor = colors.secondary),
-                    onClick = { /*TODO*/ }
-                ) {
-                    Text(
-                        "Create account",
-                        style = appTypography.button,
-                        fontWeight = FontWeight.SemiBold,
-                        color = colors.onSecondary
+        Image(
+            painter = painterResource(id = bgId),
+            contentDescription = null,
+            modifier = Modifier
+                .background(colors.primary)
+                .fillMaxWidth()
+                .fillMaxHeight()
+        )
+        Column {
+            Spacer(Modifier.size(72.dp))
+            Row {
+                Spacer(Modifier.size(88.dp))
+                Box {
+                    val logoId = if (isSystemInDarkTheme()) {
+                        R.drawable.dark_welcome_illos
+                    } else {
+                        R.drawable.light_welcome_illos
+                    }
+                    Image(
+                        painter = painterResource(id = logoId),
+                        contentDescription = null,
+                        contentScale = FillHeight,
+                        alignment = Alignment.CenterStart,
+                        modifier = Modifier
+                            .height((35 * 8).dp)
                     )
                 }
             }
             Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .height(64.dp)
-                    .fillMaxWidth()
-                    .padding(
-                        vertical = 8.dp,
-                        horizontal = 16.dp
-                    )
-                    .clickable(onClick = onClick)
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                val logoId = if (isSystemInDarkTheme()) {
+                    R.drawable.dark_logo
+                } else {
+                    R.drawable.light_logo
+                }
+
+                Spacer(Modifier.size(48.dp))
+                Image(
+                    painter = painterResource(id = logoId),
+                    contentDescription = null,
+                    modifier = Modifier.padding()
+                )
                 Text(
-                    "Log in",
-                    style = appTypography.button,
-                    fontWeight = FontWeight.SemiBold,
-                    color = if (isSystemInDarkTheme()) {
-                        white
-                    } else {
-                        pink900
-                    },
+                    "Beautiful home garden solutions",
+                    style = appTypography.subtitle1,
+                    fontWeight = FontWeight.Light,
+                    color = colors.onPrimary,
                     modifier = Modifier
+                        .firstBaselineToTop(
+                            24.dp,
+                            40.dp
+                        )
                         .padding()
                 )
+                Row(
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.Top,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Button(
+                        shape = shapes.medium,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(48.dp)
+                            .padding(
+                                vertical = 0.dp,
+                                horizontal = 16.dp
+                            ),
+                        colors = ButtonDefaults.buttonColors(backgroundColor = colors.secondary),
+                        onClick = { /*TODO*/ }
+                    ) {
+                        Text(
+                            "Create account",
+                            style = appTypography.button,
+                            fontWeight = FontWeight.SemiBold,
+                            color = colors.onSecondary
+                        )
+                    }
+                }
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier
+                        .height(64.dp)
+                        .fillMaxWidth()
+                        .padding(
+                            vertical = 8.dp,
+                            horizontal = 16.dp
+                        )
+                        .clickable(onClick = onClick)
+                ) {
+                    Text(
+                        "Log in",
+                        style = appTypography.button,
+                        fontWeight = FontWeight.SemiBold,
+                        color = if (isSystemInDarkTheme()) {
+                            white
+                        } else {
+                            pink900
+                        },
+                        modifier = Modifier
+                            .padding()
+                    )
+                }
             }
         }
     }
