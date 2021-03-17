@@ -33,10 +33,12 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme.colors
+import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -44,9 +46,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.AlignmentLine
 import androidx.compose.ui.layout.ContentScale.Companion.FillHeight
 import androidx.compose.ui.layout.FirstBaseline
+import androidx.compose.ui.layout.LastBaseline
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -92,7 +96,9 @@ fun MyApp(onClick: () -> Unit) {
                 .fillMaxWidth()
                 .fillMaxHeight()
         )
-        Column {
+        Column(
+            modifier = Modifier.padding()
+        ) {
             Spacer(Modifier.size(72.dp))
             Row {
                 Spacer(Modifier.size(88.dp))
@@ -133,9 +139,9 @@ fun MyApp(onClick: () -> Unit) {
                     fontWeight = FontWeight.Light,
                     color = colors.onPrimary,
                     modifier = Modifier
-                        .firstBaselineToTop(
-                            24.dp,
-                            40.dp
+                        .paddingFromBaseline(
+                            top = 24.dp,
+                            bottom = 32.dp
                         )
                         .padding()
                 )
@@ -194,6 +200,103 @@ fun MyApp(onClick: () -> Unit) {
     }
 }
 
+@Composable
+fun Login(onClick: () -> Unit) {
+    WelcomeTheme {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .padding()
+        ) {
+            Text(
+                "Log in with email",
+                style = appTypography.h1,
+                fontWeight = FontWeight.Bold,
+                color = colors.onPrimary,
+                modifier = Modifier
+                    .paddingFromBaseline(
+                        top = 184.dp
+                    )
+            )
+            SimpleOutlinedTextFields()
+            Text(
+                "By clicking below, you agree to our Terms of Use" +
+                    " and consent to our Privacy Policy.",
+                style = appTypography.body2,
+                fontWeight = FontWeight.Normal,
+                color = colors.onPrimary,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .paddingFromBaseline(top = 24.dp, bottom = 16.dp)
+                    .padding(
+                        horizontal = 16.dp
+                    )
+            )
+            Button(
+                shape = shapes.medium,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(48.dp)
+                    .padding(
+                        vertical = 0.dp,
+                        horizontal = 16.dp
+                    ),
+                colors = ButtonDefaults.buttonColors(backgroundColor = colors.secondary),
+                onClick = onClick
+            ) {
+                Text(
+                    "Log in",
+                    style = appTypography.button,
+                    fontWeight = FontWeight.SemiBold,
+                    color = colors.onSecondary
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun SimpleOutlinedTextFields() {
+
+    OutlinedTextField(
+        value = "",
+        onValueChange = { },
+        label = {
+            Text(
+                "Email address",
+                style = appTypography.body1,
+                color = colors.onPrimary,
+            )
+        },
+        modifier = Modifier
+            .height(64.dp)
+            .fillMaxWidth()
+            .padding(
+                horizontal = 16.dp,
+                vertical = 0.dp
+            )
+    )
+
+    OutlinedTextField(
+        value = "",
+        onValueChange = { },
+        label = {
+            Text(
+                "Password (8+ characters)",
+                style = appTypography.body1,
+                color = colors.onPrimary
+            )
+        },
+        modifier = Modifier
+            .height(64.dp)
+            .fillMaxWidth()
+            .padding(
+                horizontal = 16.dp,
+                vertical = 0.dp
+            )
+    )
+}
+
 @Preview("Light Theme", widthDp = 360, heightDp = 640)
 @Composable
 fun LightPreview() {
@@ -214,9 +317,41 @@ fun DarkPreview() {
     }
 }
 
+@Preview(
+    "Light Theme Login",
+    showBackground = true,
+    backgroundColor = 0xFFFFFF,
+    widthDp = 360,
+    heightDp = 640
+)
+@Composable
+fun LightLoginPreview() {
+    WelcomeTheme {
+        Login(
+            onClick = { /*TODO*/ }
+        )
+    }
+}
+
+@Preview(
+    "Dark Theme Login",
+    showBackground = true,
+    backgroundColor = 0x232323,
+    widthDp = 360,
+    heightDp = 640
+)
+@Composable
+fun DarkLoginPreview() {
+    WelcomeTheme(darkTheme = true) {
+        Login(
+            onClick = { /*TODO*/ }
+        )
+    }
+}
+
 fun Modifier.firstBaselineToTop(
     firstBaselineToTop: Dp,
-    bottomToFirstBaseline: Dp = 0.dp
+    bottomToLastBaseline: Dp = 0.dp
 ) = Modifier.layout { measurable, constraints ->
     // Measure the composable
     val placeable = measurable.measure(constraints)
@@ -229,8 +364,12 @@ fun Modifier.firstBaselineToTop(
     val placeableY = firstBaselineToTop.toPx() - firstBaseline
     var height = placeable.height + placeableY
 
-    if (bottomToFirstBaseline > 0.dp) {
-        height = height + bottomToFirstBaseline.toPx() - placeableY
+    if (bottomToLastBaseline > 0.dp) {
+        // Check the composable has a last baseline
+        check(placeable[LastBaseline] != AlignmentLine.Unspecified)
+        val lastBaseline = placeable[LastBaseline]
+
+        height = height + bottomToLastBaseline.toPx() - lastBaseline
     }
     layout(placeable.width, height.toInt()) {
         // Where the composable gets placed

@@ -22,6 +22,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
+import com.example.androiddevchallenge.Login
 import com.example.androiddevchallenge.MyApp
 
 object MainDestinations {
@@ -42,7 +43,9 @@ fun NavGraph(startDestination: String = MainDestinations.WELCOME) {
             MyApp(actions.goToLoginScreen)
         }
 
-        composable(MainDestinations.LOG_IN) {}
+        composable(MainDestinations.LOG_IN) {
+            Login(onClick = { /*TODO*/ })
+        }
 
         composable(MainDestinations.HOME) {}
     }
