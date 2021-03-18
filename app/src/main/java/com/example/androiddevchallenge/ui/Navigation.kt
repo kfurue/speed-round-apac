@@ -22,6 +22,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
+import com.example.androiddevchallenge.HomeScreen
 import com.example.androiddevchallenge.Login
 import com.example.androiddevchallenge.MyApp
 
@@ -44,10 +45,12 @@ fun NavGraph(startDestination: String = MainDestinations.WELCOME) {
         }
 
         composable(MainDestinations.LOG_IN) {
-            Login(onClick = { /*TODO*/ })
+            Login(actions.goToHomeScreen)
         }
 
-        composable(MainDestinations.HOME) {}
+        composable(MainDestinations.HOME) {
+            HomeScreen()
+        }
     }
 }
 
@@ -58,7 +61,7 @@ class MainActions(navController: NavHostController) {
     val goToLoginScreen: () -> Unit = {
         navController.navigate(MainDestinations.LOG_IN)
     }
-    val selectCourse: (Int) -> Unit = { courseId: Int ->
-        navController.navigate("")
+    val goToHomeScreen: () -> Unit = {
+        navController.navigate(MainDestinations.HOME)
     }
 }
