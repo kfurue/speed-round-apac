@@ -32,6 +32,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.material.BottomAppBar
 import androidx.compose.material.Card
 import androidx.compose.material.Checkbox
 import androidx.compose.material.Divider
@@ -40,8 +41,12 @@ import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.AccountCircle
+import androidx.compose.material.icons.rounded.FavoriteBorder
 import androidx.compose.material.icons.rounded.FilterList
+import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.Search
+import androidx.compose.material.icons.rounded.ShoppingCart
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -52,6 +57,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.androiddevchallenge.ui.theme.WelcomeTheme
 import com.example.androiddevchallenge.ui.theme.appTypography
+import com.example.androiddevchallenge.ui.theme.green300
 import com.example.androiddevchallenge.ui.theme.shapes
 
 @Composable
@@ -139,75 +145,77 @@ fun HomeScreen() {
 
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
-                contentPadding = PaddingValues(horizontal = 0.dp, vertical = 8.dp),
-                content = {
-                    items(6) { index ->
-                        Row(
+                contentPadding = PaddingValues(horizontal = 0.dp, vertical = 8.dp)
+            ) {
+                items(6) { index ->
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(
+                                horizontal = 16.dp,
+                                vertical = 0.dp
+                            )
+                    ) {
+                        Card(
+                            shape = shapes.small,
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(
-                                    horizontal = 16.dp,
-                                    vertical = 0.dp
-                                )
+                                .background(colors.primary)
+                                .padding()
+                                .width(64.dp)
+                                .height(64.dp)
                         ) {
-                            Card(
-                                shape = shapes.small,
-                                modifier = Modifier
-                                    .background(colors.primary)
-                                    .padding()
-                                    .width(64.dp)
-                                    .height(64.dp)
-                            ) {
-                                Image(
-                                    painter = painterResource(id = listItems[index].imageId),
-                                    contentDescription = null,
-                                    contentScale = ContentScale.Crop
-                                )
-                            }
-                            Column {
-                                Text(
-                                    text = listItems[index].title,
-                                    style = appTypography.h2,
-                                    fontWeight = FontWeight.Bold,
-                                    color = colors.onPrimary,
-                                    modifier = Modifier
-                                        .padding(horizontal = 8.dp)
-                                        .paddingFromBaseline(
-                                            top = 24.dp
-                                        )
-                                )
-                                Text(
-                                    text = "This is a description",
-                                    style = appTypography.body1,
-                                    fontWeight = FontWeight.Normal,
-                                    color = colors.onPrimary,
-                                    modifier = Modifier
-                                        .padding(horizontal = 8.dp)
-                                        .paddingFromBaseline(
-                                            bottom = 24.dp
-                                        )
-                                )
-                            }
-                            Box(
-                                Modifier.padding(16.dp)
-                                    .weight(1f)
-                                    .wrapContentWidth(Alignment.End)
-                            ) {
-                                Checkbox(checked = false, onCheckedChange = { /*TODO*/ })
-                            }
+                            Image(
+                                painter = painterResource(id = listItems[index].imageId),
+                                contentDescription = null,
+                                contentScale = ContentScale.Crop
+                            )
                         }
-                        Divider(
-                            color = colors.onPrimary,
-                            thickness = 1.dp,
-                            startIndent = 80.dp,
-                            modifier = Modifier
-                                .padding(
-                                    end = 16.dp
-                                )
-                        )
+                        Column {
+                            Text(
+                                text = listItems[index].title,
+                                style = appTypography.h2,
+                                fontWeight = FontWeight.Bold,
+                                color = colors.onPrimary,
+                                modifier = Modifier
+                                    .padding(horizontal = 8.dp)
+                                    .paddingFromBaseline(
+                                        top = 24.dp
+                                    )
+                            )
+                            Text(
+                                text = "This is a description",
+                                style = appTypography.body1,
+                                fontWeight = FontWeight.Normal,
+                                color = colors.onPrimary,
+                                modifier = Modifier
+                                    .padding(horizontal = 8.dp)
+                                    .paddingFromBaseline(
+                                        bottom = 24.dp
+                                    )
+                            )
+                        }
+                        Box(
+                            Modifier
+                                .padding(16.dp)
+                                .weight(1f)
+                                .wrapContentWidth(Alignment.End)
+                        ) {
+                            Checkbox(checked = false, onCheckedChange = { /*TODO*/ })
+                        }
                     }
+                    Divider(
+                        color = colors.onPrimary,
+                        thickness = 1.dp,
+                        startIndent = 80.dp,
+                        modifier = Modifier
+                            .padding(
+                                end = 16.dp
+                            )
+                    )
                 }
-            )
+            }
+
+            BottomAppBar()
         }
     }
 }
@@ -249,73 +257,93 @@ fun ImageList() {
 }
 
 @Composable
-fun ImageListColumn() {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp)
-    ) {
-        Card(
-            shape = shapes.small,
-            modifier = Modifier
-                .background(colors.primary)
-                .padding()
-                .width(64.dp)
-                .height(64.dp)
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.card_rows_image0),
-                contentDescription = null,
-                contentScale = ContentScale.Crop
-            )
-        }
-        Column {
-            Text(
-                text = "rowsItems[index].title",
-                style = appTypography.h2,
-                fontWeight = FontWeight.Bold,
-                color = colors.onPrimary,
-                modifier = Modifier
-                    .padding(horizontal = 8.dp)
-                    .paddingFromBaseline(
-                        top = 24.dp
-                    )
-            )
-            Text(
-                text = "rowsItems[index].title",
-                style = appTypography.body1,
-                fontWeight = FontWeight.Normal,
-                color = colors.onPrimary,
-                modifier = Modifier
-                    .padding(horizontal = 8.dp)
-                    .paddingFromBaseline(
-                        bottom = 24.dp
-                    )
-            )
-        }
-        Box(
-            Modifier.padding(16.dp)
-                .weight(1f)
-                .wrapContentWidth(Alignment.End)
-        ) {
-            Checkbox(checked = false, onCheckedChange = { /*TODO*/ })
+fun BottomAppBar() {
+    BottomAppBar(Modifier.height(56.dp)) {
+        Row(Modifier.fillMaxWidth()) {
+            Column(
+                Modifier.weight(1f),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Icon(
+                    Icons.Rounded.Home,
+                    contentDescription = "Localized description",
+                    tint = colors.onPrimary,
+                    modifier = Modifier
+                        .size(24.dp)
+                )
+                Text(
+                    text = "Home",
+                    style = appTypography.caption,
+                    fontWeight = FontWeight.Normal,
+                    color = colors.onPrimary,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+            }
+            Column(
+                Modifier.weight(1f),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Icon(
+                    Icons.Rounded.FavoriteBorder,
+                    contentDescription = "Localized description",
+                    tint = green300,
+                    modifier = Modifier
+                        .size(24.dp)
+                )
+                Text(
+                    text = "Favorites",
+                    style = appTypography.caption,
+                    fontWeight = FontWeight.Normal,
+                    color = green300,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+            }
+            Column(
+                Modifier.weight(1f),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Icon(
+                    Icons.Rounded.AccountCircle,
+                    contentDescription = "Localized description",
+                    tint = green300,
+                    modifier = Modifier
+                        .size(24.dp)
+                )
+                Text(
+                    text = "Profile",
+                    style = appTypography.caption,
+                    fontWeight = FontWeight.Normal,
+                    color = green300,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+            }
+            Column(
+                Modifier.weight(1f),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Icon(
+                    Icons.Rounded.ShoppingCart,
+                    contentDescription = "Localized description",
+                    tint = green300,
+                    modifier = Modifier
+                        .size(24.dp)
+                )
+                Text(
+                    text = "Cart",
+                    style = appTypography.caption,
+                    fontWeight = FontWeight.Normal,
+                    color = green300,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+            }
         }
     }
-    Divider(
-        color = colors.onPrimary,
-        thickness = 1.dp,
-        startIndent = 80.dp,
-        modifier = Modifier
-            .padding(
-                end = 16.dp
-            )
-    )
 }
 
 @Preview("Light Theme", widthDp = 360, heightDp = 640)
 @Composable
 fun LightHomePreview() {
     WelcomeTheme {
-        ImageListColumn()
+        BottomAppBar()
     }
 }
