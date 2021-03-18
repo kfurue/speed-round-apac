@@ -54,6 +54,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.example.androiddevchallenge.model.CardRowsItem
 import com.example.androiddevchallenge.ui.NavGraph
 import com.example.androiddevchallenge.ui.theme.WelcomeTheme
 import com.example.androiddevchallenge.ui.theme.appTypography
@@ -61,6 +62,8 @@ import com.example.androiddevchallenge.ui.theme.pink900
 import com.example.androiddevchallenge.ui.theme.shapes
 import com.example.androiddevchallenge.ui.theme.white
 
+val rowsItems = arrayListOf<CardRowsItem>()
+val rowsNames = arrayOf("Desert chic", "Tiny terrariums", "Jungle vibes", "Easy care", "Statements")
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         window.apply {
@@ -72,6 +75,16 @@ class MainActivity : AppCompatActivity() {
             }
         }
         super.onCreate(savedInstanceState)
+
+        for (i in rowsNames.indices) {
+            rowsItems.add(
+                CardRowsItem(
+                    id = i,
+                    title = rowsNames[i],
+                    imageId = resources.getIdentifier("card_rows_image$i", "drawable", packageName)
+                )
+            )
+        }
         setContent {
             NavGraph()
         }
