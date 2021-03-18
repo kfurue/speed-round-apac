@@ -15,6 +15,11 @@
  */
 package com.example.androiddevchallenge.model
 
+import androidx.annotation.DrawableRes
+
 data class ImageListItem(
-    val id: Int
+    val id: Int,
+    val title: String,
+    @DrawableRes
+    val imageId: Int
 )

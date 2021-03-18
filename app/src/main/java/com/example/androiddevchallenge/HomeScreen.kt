@@ -138,9 +138,10 @@ fun HomeScreen() {
             ImageList()
 
             LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(8.dp),
                 contentPadding = PaddingValues(horizontal = 0.dp, vertical = 8.dp),
                 content = {
-                    items(5) { index ->
+                    items(6) { index ->
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -158,14 +159,14 @@ fun HomeScreen() {
                                     .height(64.dp)
                             ) {
                                 Image(
-                                    painter = painterResource(id = rowsItems[index].imageId),
+                                    painter = painterResource(id = listItems[index].imageId),
                                     contentDescription = null,
                                     contentScale = ContentScale.Crop
                                 )
                             }
                             Column {
                                 Text(
-                                    text = rowsItems[index].title,
+                                    text = listItems[index].title,
                                     style = appTypography.h2,
                                     fontWeight = FontWeight.Bold,
                                     color = colors.onPrimary,
@@ -176,7 +177,7 @@ fun HomeScreen() {
                                         )
                                 )
                                 Text(
-                                    text = rowsItems[index].title,
+                                    text = "This is a description",
                                     style = appTypography.body1,
                                     fontWeight = FontWeight.Normal,
                                     color = colors.onPrimary,

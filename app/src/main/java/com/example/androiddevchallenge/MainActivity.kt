@@ -55,6 +55,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.androiddevchallenge.model.CardRowsItem
+import com.example.androiddevchallenge.model.ImageListItem
 import com.example.androiddevchallenge.ui.NavGraph
 import com.example.androiddevchallenge.ui.theme.WelcomeTheme
 import com.example.androiddevchallenge.ui.theme.appTypography
@@ -64,6 +65,12 @@ import com.example.androiddevchallenge.ui.theme.white
 
 val rowsItems = arrayListOf<CardRowsItem>()
 val rowsNames = arrayOf("Desert chic", "Tiny terrariums", "Jungle vibes", "Easy care", "Statements")
+val listItems = arrayListOf<ImageListItem>()
+val listNames = arrayOf(
+    "Monstera", "Aglaonema", "Peace lily",
+    "Fiddle leaf tree", "Snake plant", "Pothos"
+)
+
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         window.apply {
@@ -82,6 +89,15 @@ class MainActivity : AppCompatActivity() {
                     id = i,
                     title = rowsNames[i],
                     imageId = resources.getIdentifier("card_rows_image$i", "drawable", packageName)
+                )
+            )
+        }
+        for (i in listNames.indices) {
+            listItems.add(
+                ImageListItem(
+                    id = i,
+                    title = listNames[i],
+                    imageId = resources.getIdentifier("image_list_image$i", "drawable", packageName)
                 )
             )
         }
